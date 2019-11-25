@@ -66,12 +66,13 @@ def random_graph(n, weight_range=10, edge_prob=0.3, savefile=None, seed=None):
     return w
 
 
-def get_clique_qubitops(weight_matrix, K):
+def get_clique_qubitops(weight_matrix, K, penality=1000):
     r"""
     Generate Hamiltonian for the clique
 
     Args:
         weight_matrix (numpy.ndarray) : adjacency matrix.
+        penality : value for A and it is like a huge penality over the violation of Ha (default 1000)
 
     Returns:
         WeightedPauliOperator, float: operator for the Hamiltonian and a
@@ -105,8 +106,7 @@ def get_clique_qubitops(weight_matrix, K):
     shift = 0
 
     Y = K - 0.5*num_nodes  # Y = K-sum_{v}{1/2}
-
-    A = 1000
+    A = penality
     # Ha part:
     shift += A*Y*Y
 
